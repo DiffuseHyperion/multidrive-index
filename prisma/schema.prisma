@@ -9,9 +9,7 @@ datasource db {
 }
 
 model Account {
-  id           String  @id @unique @default(uuid()) @db.Uuid
-  name         String
-  visible      Boolean @default(false)
-  clientSecret String
-  clientId     String
+  homeAccountId String  @id @unique // `${tenantId}.${homeAccountId}`
+  name          String
+  visible       Boolean @default(false)
 }

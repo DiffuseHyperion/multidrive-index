@@ -6,7 +6,7 @@ export default async function Home() {
     if (accounts.length === 0) {
         redirect("/admin")
     } else if (accounts.length === 1) {
-        redirect(`/${accounts[0].id}`)
+        redirect(`/${accounts[0].homeAccountId}`)
     }
 
     return (
@@ -15,7 +15,7 @@ export default async function Home() {
             <p>Select account:</p>
             <div>
                 {accounts.map((account) => (
-                    <p key={account.id}>{account.name}</p>
+                    <p key={account.homeAccountId}>{account.name}</p>
                 ))}
             </div>
         </div>

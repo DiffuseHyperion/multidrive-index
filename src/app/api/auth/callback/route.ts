@@ -1,6 +1,6 @@
 import {NextRequest} from "next/server"
 import {redirect} from "next/navigation"
-import {MSAL, SCOPES} from "@/lib/globals"
+import {MSAL, prisma, SCOPES} from "@/lib/globals"
 import {cookies} from "next/headers"
 
 export async function GET(request: NextRequest) {
@@ -17,7 +17,12 @@ export async function GET(request: NextRequest) {
         redirectUri: `${process.env.REDIRECT_URL!}/api/auth/callback`
     })
 
-    cookieStore.set("access_token", response.accessToken)
+    const account = await prisma.account.create({
+        data: {
+            homeAccountId: response.account!.homeAccountId,
+            name: response.account!.username,
+        }
+    })
 
-    redirect("/")
+    redirect(`/${account.homeAccountId}`)
 }
