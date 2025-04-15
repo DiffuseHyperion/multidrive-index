@@ -1,0 +1,14 @@
+services:
+  database:
+    image: postgres
+    container_name: multidrive-db
+    restart: no
+    environment:
+      POSTGRES_PASSWORD: password
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+networks:
+  default:
+    name: multidrive
