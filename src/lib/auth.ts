@@ -1,17 +1,21 @@
 "use server"
 
-import {MSAL, SCOPES} from "@/lib/globals"
+import {MSAL, prisma, SCOPES} from "@/lib/globals"
 
 export async function getAccessToken(homeAccountId: string) {
-    const accountInfos = await MSAL.getTokenCache().getAllAccounts()
-    const filteredAccounts = accountInfos.filter((accountInfo) => accountInfo.homeAccountId === homeAccountId)
+    const accountInfo = await MSAL.getTokenCache().getAccountByHomeId(homeAccountId)
 
-    if (filteredAccounts.length !== 0) {
+    if (!accountInfo) {
+        prisma.account.delete({
+            where: {
+                homeAccountId: homeAccountId,
+            }
+        })
         return null
     }
 
     return (await MSAL.acquireTokenSilent({
-        account: filteredAccounts[0],
+        account: accountInfo,
         scopes: SCOPES,
     })).accessToken
 }
