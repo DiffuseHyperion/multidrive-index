@@ -30,13 +30,15 @@ model AccountCache {
 }
 
 model TenantProfileCache {
-  tenantId       String   @id
+  tenantId       String
   localAccountId String
   name           String?
   isHomeTenant   Boolean?
 
   accountId String
   account   AccountCache @relation(fields: [accountId], references: [id])
+
+  @@id([tenantId, accountId])
 }
 
 model IdTokenCache {

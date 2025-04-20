@@ -12,8 +12,6 @@ export async function GET(request: NextRequest, {params}: { params: Promise<{ pa
         return new Response("Unauthorized", {status: 401})
     }
 
-
-
     const path = (await params).path
     return NextResponse.json({path: path})
 }

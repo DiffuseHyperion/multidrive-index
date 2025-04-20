@@ -1,10 +1,8 @@
 import {NextRequest} from "next/server"
 import {redirect} from "next/navigation"
 import {MSAL, prisma, SCOPES} from "@/lib/globals"
-import {cookies} from "next/headers"
 
 export async function GET(request: NextRequest) {
-    const cookieStore = await cookies()
     const searchParams = request.nextUrl.searchParams
 
     const code = searchParams.get("code")!

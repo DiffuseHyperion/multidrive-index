@@ -11,7 +11,6 @@ export default async function AccountPage({params}: {params: Promise<{ accountId
     }
 
     const data = await getFiles(token, path)
-    console.log(data)
     return (
         <div>
             <p>Account Files</p>

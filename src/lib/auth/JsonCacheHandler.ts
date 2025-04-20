@@ -249,7 +249,20 @@ async function saveAccountEntities(accountEntities: Record<string, SerializedAcc
                 clientInfo: account.client_info,
                 lastModificationTime: account.last_modification_time,
                 lastModificationApp: account.last_modification_app,
-                // todo: handle tenant updating
+                tenantProfiles: {
+                    deleteMany: {}, // there are no supported functions to update based on an array (like createMany but for updates), replacing will have to do
+                    createMany: {
+                        data: (account.tenantProfiles || []).map(profile => {
+                            const tenantProfile = JSON.parse(profile) as TenantProfile
+                            return {
+                                tenantId: tenantProfile.tenantId,
+                                localAccountId: tenantProfile.localAccountId,
+                                name: tenantProfile.name,
+                                isHomeTenant: tenantProfile.isHomeTenant
+                            }
+                        })
+                    }
+                }
             },
             create: {
                 id: id,
@@ -278,6 +291,8 @@ async function saveAccountEntities(accountEntities: Record<string, SerializedAcc
                 },
             }
         })
+
+
     }
 }
 
