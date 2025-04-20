@@ -2,7 +2,7 @@ import {getAccessToken} from "@/lib/auth"
 import {notFound} from "next/navigation"
 import getFiles from "@/lib/files"
 
-export default async function AccountPage({params}: {params: Promise<{ accountId: string, path?: string[] }>}) {
+export default async function AccountPage({params}: { params: Promise<{ accountId: string, path?: string[] }> }) {
     const {accountId, path} = await params
 
     const token = await getAccessToken(accountId)

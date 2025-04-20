@@ -6,21 +6,32 @@ export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams
 
     const code = searchParams.get("code")!
-    const clientInfo = searchParams.get("client_info")!
-    const sessionState = searchParams.get("session_state")!
 
-    const response = await MSAL.acquireTokenByCode({
-        code: code,
-        scopes: SCOPES,
-        redirectUri: `${process.env.REDIRECT_URL!}/api/auth/callback`
-    })
+    try {
+        const response = await MSAL.acquireTokenByCode({
+            code: code,
+            scopes: SCOPES,
+            redirectUri: `${process.env.REDIRECT_URL!}/api/auth/callback`,
+        })
 
-    const account = await prisma.account.create({
-        data: {
-            homeAccountId: response.account!.homeAccountId,
-            name: response.account!.username,
-        }
-    })
+        const accountInfo = response.account!
 
-    redirect(`/${account.homeAccountId}`)
+        const account = await prisma.account.upsert({
+            where: {
+                homeAccountId: accountInfo.homeAccountId,
+            },
+            update: {
+                name: accountInfo.username,
+            },
+            create: {
+                homeAccountId: accountInfo.homeAccountId,
+                name: accountInfo.username,
+            },
+        })
+
+        redirect(`/${account.homeAccountId}`)
+    } catch (error: unknown) {
+        const {errorMessage} = error as { errorMessage: string }
+        return new Response(errorMessage, {status: 400})
+    }
 }

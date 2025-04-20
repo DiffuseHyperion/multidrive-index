@@ -49,7 +49,7 @@ export type OnedriveFile = OnedriveItem & {
     }
 }
 
-export default async function getFiles(accessToken: string, path?: string[]) {
+export default async function getFiles(accessToken: string, path?: string[]): Promise<(OnedriveFolder | OnedriveFile)[]> {
     const targetPath = path ? `:${path.reduce((accumulator, item) => `${accumulator}/${item}`, "")}:` : ""
 
     const response = await fetch(`https://graph.microsoft.com/v1.0/me/drive/root${targetPath}/children`, {
@@ -58,13 +58,13 @@ export default async function getFiles(accessToken: string, path?: string[]) {
         }
     })
 
-    return ((await response.json()).value as any[]).map((folder: any) => {
+    return ((await response.json()).value).map((folder: OnedriveFolder | OnedriveFile) => {
         if (folder.hasOwnProperty("folder")) {
             return folder as OnedriveFolder
         } else if (folder.hasOwnProperty("file")) {
             return folder as OnedriveFile
         } else {
-            throw Error(`Could not recognize whether "${folder.path}" was a file or folder`)
+            throw Error(`Could not recognize whether "${folder.name}" was a file or folder`)
         }
     })
 }
