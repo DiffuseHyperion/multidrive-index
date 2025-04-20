@@ -10,7 +10,11 @@ export default async function AccountPage({params}: { params: Promise<{ accountI
         notFound()
     }
 
-    const data = await getFiles(token, path)
+    const {data, error} = await getFiles(token, path)
+    if (!data) {
+        console.log(error)
+        notFound()
+    }
     return (
         <div>
             <p>Account Files</p>
