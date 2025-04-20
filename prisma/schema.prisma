@@ -9,7 +9,81 @@ datasource db {
 }
 
 model Account {
-  homeAccountId String  @id @unique // `${tenantId}.${homeAccountId}`
+  homeAccountId String  @id @unique
   name          String
   visible       Boolean @default(false)
+}
+
+model AccountCache {
+  id                   String               @id @unique // <home_account_id>-<environment>-<realm*>
+  authorityType        String
+  clientInfo           String?
+  environment          String
+  homeAccountId        String
+  lastModificationApp  String?
+  lastModificationTime String?
+  localAccountId       String
+  name                 String?
+  realm                String
+  tenantProfiles       TenantProfileCache[]
+  username             String
+}
+
+model TenantProfileCache {
+  tenantId       String   @id
+  localAccountId String
+  name           String?
+  isHomeTenant   Boolean?
+
+  accountId String
+  account   AccountCache @relation(fields: [accountId], references: [id])
+}
+
+model IdTokenCache {
+  id             String @id @unique
+  clientId       String
+  credentialType String
+  environment    String
+  homeAccountId  String
+  realm          String
+  secret         String
+}
+
+model AccessTokenCache {
+  id                  String  @id @unique
+  cachedAt            String
+  clientId            String
+  credentialType      String
+  environment         String
+  expiresOn           String
+  extendedExpiresOn   String?
+  homeAccountId       String
+  keyId               String?
+  realm               String
+  refreshOn           String?
+  requestedClaims     String?
+  requestedClaimsHash String?
+  secret              String
+  target              String
+  tokenType           String?
+  userAssertionHash   String?
+}
+
+model RefreshTokenCache {
+  id             String  @id @unique
+  clientId       String
+  credentialType String
+  environment    String
+  familyId       String?
+  homeAccountId  String
+  realm          String?
+  secret         String
+  target         String?
+}
+
+model AppMetadataCache {
+  id          String  @id @unique // appmetadata-<environment>-<client_id>
+  clientId    String
+  environment String
+  familyId    String?
 }

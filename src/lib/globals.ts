@@ -1,5 +1,6 @@
 import {PrismaClient} from "@/lib/prisma"
 import {ConfidentialClientApplication} from "@azure/msal-node"
+import {CachePlugin} from "@/lib/auth/CachePlugin"
 
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient }
 const globalForMSAL = globalThis as unknown as { MSAL: ConfidentialClientApplication }
@@ -11,6 +12,11 @@ export const MSAL = globalForMSAL.MSAL || new ConfidentialClientApplication({
         clientSecret: process.env.CLIENT_SECRET!,
         authority: (process.env.TENANT_ID ? `https://login.microsoftonline.com/${process.env.TENANT_ID!}` : "https://login.microsoftonline.com/common")
     },
+    cache: {
+        cachePlugin: new CachePlugin(
+
+        )
+    }
 })
 
 if (process.env.NODE_ENV! !== "production") {

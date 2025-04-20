@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@azure/msal-common':
+        specifier: ^15.5.1
+        version: 15.5.1
       '@azure/msal-node':
         specifier: ^3.5.0
         version: 3.5.0
@@ -30,6 +33,9 @@ importers:
       '@eslint/eslintrc':
         specifier: ^3
         version: 3.3.1
+      '@next/eslint-plugin-next':
+        specifier: ^15.3.1
+        version: 15.3.1
       '@tailwindcss/postcss':
         specifier: ^4
         version: 4.1.4
@@ -48,6 +54,9 @@ importers:
       eslint-config-next:
         specifier: 15.3.0
         version: 15.3.0(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)
+      eslint-plugin-react-hooks:
+        specifier: ^5.2.0
+        version: 5.2.0(eslint@9.24.0(jiti@2.4.2))
       prisma:
         specifier: ^6.6.0
         version: 6.6.0(typescript@5.8.3)
@@ -66,6 +75,10 @@ packages:
 
   '@azure/msal-common@15.5.0':
     resolution: {integrity: sha512-u97AJ6m4PB24/Plms9e9iydRcOaxxrHWkan1px5GeWGJfakY1D/r1DmY1+Typ8zWC/5JbNzH1GYpXrorPymz5g==}
+    engines: {node: '>=0.8.0'}
+
+  '@azure/msal-common@15.5.1':
+    resolution: {integrity: sha512-oxK0khbc4Bg1bKQnqDr7ikULhVL2OHgSrIq0Vlh4b6+hm4r0lr6zPMQE8ZvmacJuh+ZZGKBM5iIObhF1q1QimQ==}
     engines: {node: '>=0.8.0'}
 
   '@azure/msal-node@3.5.0':
@@ -411,6 +424,9 @@ packages:
 
   '@next/eslint-plugin-next@15.3.0':
     resolution: {integrity: sha512-511UUcpWw5GWTyKfzW58U2F/bYJyjLE9e3SlnGK/zSXq7RqLlqFO8B9bitJjumLpj317fycC96KZ2RZsjGNfBw==}
+
+  '@next/eslint-plugin-next@15.3.1':
+    resolution: {integrity: sha512-oEs4dsfM6iyER3jTzMm4kDSbrQJq8wZw5fmT6fg2V3SMo+kgG+cShzLfEV20senZzv8VF+puNLheiGPlBGsv2A==}
 
   '@next/swc-darwin-arm64@15.3.0':
     resolution: {integrity: sha512-PDQcByT0ZfF2q7QR9d+PNj3wlNN4K6Q8JoHMwFyk252gWo4gKt7BF8Y2+KBgDjTFBETXZ/TkBEUY7NIIY7A/Kw==}
@@ -1985,6 +2001,8 @@ snapshots:
 
   '@azure/msal-common@15.5.0': {}
 
+  '@azure/msal-common@15.5.1': {}
+
   '@azure/msal-node@3.5.0':
     dependencies:
       '@azure/msal-common': 15.5.0
@@ -2231,6 +2249,10 @@ snapshots:
   '@next/env@15.3.0': {}
 
   '@next/eslint-plugin-next@15.3.0':
+    dependencies:
+      fast-glob: 3.3.1
+
+  '@next/eslint-plugin-next@15.3.1':
     dependencies:
       fast-glob: 3.3.1
 
