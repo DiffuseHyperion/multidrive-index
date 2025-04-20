@@ -33,19 +33,19 @@ async function saveAppMetadataEntities(appMetadataEntities: Record<string, Seria
     for (const [id, appMetadata] of Object.entries(appMetadataEntities)) {
         await prisma.appMetadataCache.upsert({
             where: {
-                id: id
+                id: id,
             },
             update: {
                 clientId: appMetadata.client_id,
                 environment: appMetadata.environment,
-                familyId: appMetadata.family_id
+                familyId: appMetadata.family_id,
             },
             create: {
                 id: id,
                 clientId: appMetadata.client_id,
                 environment: appMetadata.environment,
-                familyId: appMetadata.family_id
-            }
+                familyId: appMetadata.family_id,
+            },
         })
     }
 }
@@ -58,7 +58,7 @@ async function getAppMetadataEntities(): Promise<Record<string, SerializedAppMet
         appMetadataEntities[appMetadata.id] = {
             client_id: appMetadata.clientId,
             environment: appMetadata.environment,
-            family_id: appMetadata.familyId
+            family_id: appMetadata.familyId,
         } as SerializedAppMetadataEntity
     }
     return appMetadataEntities
@@ -68,7 +68,7 @@ async function saveRefreshTokenEntities(refreshTokenEntities: Record<string, Ser
     for (const [id, refreshToken] of Object.entries(refreshTokenEntities)) {
         await prisma.refreshTokenCache.upsert({
             where: {
-                id: id
+                id: id,
             },
             update: {
                 homeAccountId: refreshToken.home_account_id,
@@ -78,7 +78,7 @@ async function saveRefreshTokenEntities(refreshTokenEntities: Record<string, Ser
                 secret: refreshToken.secret,
                 familyId: refreshToken.family_id,
                 target: refreshToken.target,
-                realm: refreshToken.realm
+                realm: refreshToken.realm,
             },
             create: {
                 id: id,
@@ -89,8 +89,8 @@ async function saveRefreshTokenEntities(refreshTokenEntities: Record<string, Ser
                 secret: refreshToken.secret,
                 familyId: refreshToken.family_id,
                 target: refreshToken.target,
-                realm: refreshToken.realm
-            }
+                realm: refreshToken.realm,
+            },
         })
     }
 }
@@ -108,7 +108,7 @@ async function getRefreshTokenEntities(): Promise<Record<string, SerializedRefre
             secret: refreshToken.secret,
             family_id: refreshToken.familyId,
             target: refreshToken.target,
-            realm: refreshToken.realm
+            realm: refreshToken.realm,
         } as SerializedRefreshTokenEntity
     }
     return refreshTokenEntities
@@ -118,7 +118,7 @@ async function saveAccessTokenEntities(accessTokenEntities: Record<string, Seria
     for (const [id, idToken] of Object.entries(accessTokenEntities)) {
         await prisma.accessTokenCache.upsert({
             where: {
-                id: id
+                id: id,
             },
             update: {
                 homeAccountId: idToken.home_account_id,
@@ -156,7 +156,7 @@ async function saveAccessTokenEntities(accessTokenEntities: Record<string, Seria
                 requestedClaims: idToken.requestedClaims,
                 requestedClaimsHash: idToken.requestedClaimsHash,
                 userAssertionHash: idToken.userAssertionHash,
-            }
+            },
         })
     }
 }
@@ -192,7 +192,7 @@ async function saveIdTokenEntities(idTokenEntities: Record<string, SerializedIdT
     for (const [id, idToken] of Object.entries(idTokenEntities)) {
         await prisma.idTokenCache.upsert({
             where: {
-                id: id
+                id: id,
             },
             update: {
                 clientId: idToken.client_id,
@@ -200,7 +200,7 @@ async function saveIdTokenEntities(idTokenEntities: Record<string, SerializedIdT
                 environment: idToken.environment,
                 homeAccountId: idToken.home_account_id,
                 realm: idToken.realm,
-                secret: idToken.secret
+                secret: idToken.secret,
             },
             create: {
                 id: id,
@@ -209,8 +209,8 @@ async function saveIdTokenEntities(idTokenEntities: Record<string, SerializedIdT
                 environment: idToken.environment,
                 homeAccountId: idToken.home_account_id,
                 realm: idToken.realm,
-                secret: idToken.secret
-            }
+                secret: idToken.secret,
+            },
         })
     }
 }
@@ -236,7 +236,7 @@ async function saveAccountEntities(accountEntities: Record<string, SerializedAcc
     for (const [id, account] of Object.entries(accountEntities)) {
         await prisma.accountCache.upsert({
             where: {
-                id: id
+                id: id,
             },
             update: {
                 homeAccountId: account.home_account_id,
@@ -258,11 +258,11 @@ async function saveAccountEntities(accountEntities: Record<string, SerializedAcc
                                 tenantId: tenantProfile.tenantId,
                                 localAccountId: tenantProfile.localAccountId,
                                 name: tenantProfile.name,
-                                isHomeTenant: tenantProfile.isHomeTenant
+                                isHomeTenant: tenantProfile.isHomeTenant,
                             }
-                        })
-                    }
-                }
+                        }),
+                    },
+                },
             },
             create: {
                 id: id,
@@ -284,12 +284,12 @@ async function saveAccountEntities(accountEntities: Record<string, SerializedAcc
                                 tenantId: tenantProfile.tenantId,
                                 localAccountId: tenantProfile.localAccountId,
                                 name: tenantProfile.name,
-                                isHomeTenant: tenantProfile.isHomeTenant
+                                isHomeTenant: tenantProfile.isHomeTenant,
                             }
-                        })
-                    }
+                        }),
+                    },
                 },
-            }
+            },
         })
 
 

@@ -12,6 +12,7 @@
     "@azure/msal-common": "^15.5.1",
     "@azure/msal-node": "^3.5.0",
     "@prisma/client": "6.6.0",
+    "@tanstack/react-table": "^8.21.3",
     "jose": "^6.0.10",
     "lucide-react": "^0.501.0",
     "next": "15.3.0",

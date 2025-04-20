@@ -2,7 +2,7 @@ import {paramPathToFullPath} from "@/lib/utils"
 import {ChevronRightIcon} from "lucide-react"
 import React from "react"
 
-function BreadcrumbsWrapper({children}: {children: React.ReactNode}) {
+function BreadcrumbsWrapper({children}: { children: React.ReactNode }) {
     return (
         <div className={`flex flex-row`}>
             {children}
@@ -11,13 +11,12 @@ function BreadcrumbsWrapper({children}: {children: React.ReactNode}) {
 }
 
 
-
 export default async function Breadcrumbs({params}: { params: Promise<{ accountId: string, path?: string[] }> }) {
     const {accountId, path} = await params
 
     const breadcrumbRawItems = [{
         name: "Root",
-        redirect: `/${accountId}`
+        redirect: `/${accountId}`,
     }, ...(path || []).map((item, index) => {
         const redirectPath = `/${accountId}${paramPathToFullPath(path!.slice(0, index + 1))}`
         return {

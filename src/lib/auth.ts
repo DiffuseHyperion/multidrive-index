@@ -9,7 +9,7 @@ export async function getAccessToken(homeAccountId: string) {
         prisma.account.delete({
             where: {
                 homeAccountId: homeAccountId,
-            }
+            },
         })
         return null
     }
