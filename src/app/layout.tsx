@@ -25,7 +25,7 @@ export default function RootLayout({children}: Readonly<{ children: React.ReactN
             className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-text`}
         >
         <Navbar/>
-        <div className={"px-32"}>
+        <div className={"px-28"}>
             {children}
         </div>
         </body>
