@@ -13,7 +13,7 @@ export default function GridView({items}: { items: ListedItem[] }) {
                     <Link href={item.href}>
                         <div className={"h-full flex flex-col items-center justify-center text-center"}>
                             {getIcon(item.type)}
-                            <p>{item.name}</p>
+                            <p className={"text-wrap"}>{item.name}</p>
                             <p>{item.size ? formatBytes(item.size, 2) : "-"}</p>
                         </div>
                     </Link>

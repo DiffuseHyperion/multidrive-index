@@ -13,9 +13,7 @@ export const MSAL = globalForMSAL.MSAL || new ConfidentialClientApplication({
         authority: (process.env.TENANT_ID ? `https://login.microsoftonline.com/${process.env.TENANT_ID!}` : "https://login.microsoftonline.com/common")
     },
     cache: {
-        cachePlugin: new CachePlugin(
-
-        )
+        cachePlugin: new CachePlugin()
     }
 })
 
