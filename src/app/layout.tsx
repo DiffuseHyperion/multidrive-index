@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({children}: Readonly<{ children: React.ReactNode }>) {
     return (
-        <html lang={"en"} className={"min-h-screen h-full"} suppressHydrationWarning>
+        <html lang={"en"} suppressHydrationWarning>
             <body className={`${geistSans.variable} ${geistMono.variable} antialiased h-full`}>
                 <ThemeProvider
                     attribute="class"
@@ -28,7 +28,7 @@ export default function RootLayout({children}: Readonly<{ children: React.ReactN
                     enableSystem
                     disableTransitionOnChange
                 >
-                    <div className={"h-full px-12 md:px-18 lg:px-36"}>
+                    <div className={"px-12 md:px-18 lg:px-36"}>
                         {children}
                     </div>
                 </ThemeProvider>

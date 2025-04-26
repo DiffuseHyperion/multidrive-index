@@ -1,75 +1,136 @@
 "use client"
 
-import {createColumnHelper, flexRender, getCoreRowModel, useReactTable} from "@tanstack/react-table"
+import {Column, ColumnDef, flexRender, getCoreRowModel, getSortedRowModel, SortingState, useReactTable} from "@tanstack/react-table"
+
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/shadcn/components/ui/table"
+import {ListedItem} from "@/app/[accountId]/[[...path]]/_components/ClientFilesView"
+import {formatBytes, formatDate, getIcon} from "@/lib/utils"
 import React from "react"
 import {redirect} from "next/navigation"
-import {formatBytes, getIcon} from "@/lib/utils"
-import {ListedItem} from "@/app/[accountId]/[[...path]]/_components/ClientFilesView"
+import {ArrowUpDown} from "lucide-react"
+import {Button} from "@/shadcn/components/ui/button"
 
-const columnHelper = createColumnHelper<ListedItem>()
-
-const columns = [
-    columnHelper.accessor("name", {
-        header: () => <p className={"text-left"}>Name</p>,
-        cell: (ctx) => (
-            <div className={"flex flex-row gap-x-2"}>
-                {getIcon(ctx.row.getValue("type"))}
-                <p>{ctx.getValue()}</p>
+function SortableColumnHeader({column, name}: { column: Column<ListedItem>, name: string }) {
+    return (
+        <Button
+            variant={"ghost"}
+            className={"cursor-pointer"}
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+            <p>{name}</p>
+            <ArrowUpDown/>
+        </Button>
+    )
+}
+export const columns: ColumnDef<ListedItem>[] = [
+    {
+        accessorKey: "name",
+        header: ({column}) => (
+            <SortableColumnHeader column={column} name={"Name"} />
+        ),
+        cell: ({row}) => (
+            // left padding is 2 instead of 3 due to existing padding in icons
+            <div className={"flex flex-row items-center gap-x-2 pl-2"}>
+                {getIcon(row.getValue("type"))}
+                <p>{row.getValue("name")}</p>
             </div>
         ),
-    }),
-    columnHelper.accessor("type", {
-        header: () => <p className={"text-left"}>Type</p>,
-    }),
-    columnHelper.accessor("lastModified", {
-        header: () => <p className={"text-left"}>Last Modified</p>,
-        cell: (ctx) => <p suppressHydrationWarning>{ctx.getValue().toLocaleString()}</p>,
-    }),
-    columnHelper.accessor("size", {
-        header: () => <p className={"text-left"}>Size</p>,
-        cell: (ctx) => <p>{ctx.getValue() ? formatBytes(ctx.getValue()!, 2) : "-"}</p>,
-    }),
-    columnHelper.accessor("href", {
-        header: () => null, // lmao
+    },
+    {
+        accessorKey: "type",
+        header: ({column}) => (
+            <SortableColumnHeader column={column} name={"Type"} />
+        ),
+        cell: ({row}) => (
+            <p className={"pl-3"}>{row.getValue("type")}</p>
+        )
+    },
+    {
+        accessorKey: "lastModified",
+        header: ({column}) => (
+            <SortableColumnHeader column={column} name={"Last Modified"} />
+        ),
+        cell: ({row}) => (
+            <p className={"pl-3"}>{formatDate(row.getValue("lastModified") as Date)}</p>
+        ),
+    },
+    {
+        accessorKey: "size",
+        header: ({column}) => (
+            <SortableColumnHeader column={column} name={"Size"} />
+        ),
+        cell: ({row}) => (
+            <p className={"pl-3"}>{row.getValue("size") ? formatBytes(row.getValue("size")!, 2) : "-"}</p>
+        ),
+    },
+    {
+        accessorKey: "href",
+        header: () => null,
         cell: () => null,
-    }),
+    },
 ]
 
 export default function ListView({items}: { items: ListedItem[] }) {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [data, _setData] = React.useState(() => [...items])
+    const [sorting, setSorting] = React.useState<SortingState>([])
 
+    const data = items // variable name must be "data" :moyai:
     const table = useReactTable({
-        columns,
         data,
+        columns,
         getCoreRowModel: getCoreRowModel(),
+        onSortingChange: setSorting,
+        getSortedRowModel: getSortedRowModel(),
+        state: {
+            sorting,
+        },
     })
 
     return (
-        <table className={"w-full"}>
-            <thead>
-            {table.getHeaderGroups().map(headerGroup => (
-                <tr key={headerGroup.id}>
-                    {headerGroup.headers.map(header => (
-                        <th key={header.id}>
-                            {flexRender(header.column.columnDef.header, header.getContext())}
-                        </th>
+        <div className="rounded-md border">
+            <Table>
+                <TableHeader>
+                    {table.getHeaderGroups().map((headerGroup) => (
+                        <TableRow key={headerGroup.id}>
+                            {headerGroup.headers.map((header) => {
+                                return (
+                                    <TableHead key={header.id}>
+                                        {header.isPlaceholder
+                                            ? null
+                                            : flexRender(
+                                                header.column.columnDef.header,
+                                                header.getContext(),
+                                            )}
+                                    </TableHead>
+                                )
+                            })}
+                        </TableRow>
                     ))}
-                </tr>
-            ))}
-            </thead>
-            <tbody>
-            {table.getRowModel().rows.map(row => (
-                <tr key={row.id} className={"cursor-pointer hover:bg-accent"}
-                    onClick={() => redirect(row.getValue("href"))}>
-                    {row.getVisibleCells().map(cell => (
-                        <td key={cell.id}>
-                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                        </td>
-                    ))}
-                </tr>
-            ))}
-            </tbody>
-        </table>
+                </TableHeader>
+                <TableBody>
+                    {table.getRowModel().rows?.length ? (
+                        table.getRowModel().rows.map((row) => (
+                            <TableRow
+                                key={row.id}
+                                data-state={row.getIsSelected() && "selected"}
+                                className={"cursor-pointer"}
+                                onClick={() => redirect(row.getValue("href"))}
+                            >
+                                {row.getVisibleCells().map((cell) => (
+                                    <TableCell key={cell.id}>
+                                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                    </TableCell>
+                                ))}
+                            </TableRow>
+                        ))
+                    ) : (
+                        <TableRow>
+                            <TableCell colSpan={columns.length} className="h-24 text-center">
+                                No results.
+                            </TableCell>
+                        </TableRow>
+                    )}
+                </TableBody>
+            </Table>
+        </div>
     )
 }

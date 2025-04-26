@@ -13,8 +13,8 @@ export function formatBytes(bytes: number, decimals: number) {
     if (bytes == 0) return '0 B'
     const k = 1024
     const sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return (bytes / Math.pow(k, i)).toFixed(decimals) + ' ' + sizes[i];
+    const i = Math.floor(Math.log(bytes) / Math.log(k))
+    return (bytes / Math.pow(k, i)).toFixed(decimals) + ' ' + sizes[i]
 }
 
 export function getIcon(mimeType: string) {
@@ -31,4 +31,28 @@ export function getIcon(mimeType: string) {
         default:
             return <FileIcon/>
     }
+}
+
+export function formatDate(date: Date): string {
+    const pad = (n: number) => n.toString().padStart(2, '0')
+
+    let hours = date.getHours()
+    const minutes = pad(date.getMinutes())
+    const seconds = pad(date.getSeconds())
+    const ampm = hours >= 12 ? 'PM' : 'AM'
+
+    hours = hours % 12
+    hours = hours ? hours : 12 // 0 becomes 12
+    const hourStr = pad(hours)
+
+    const year = date.getFullYear().toString().slice(-2)
+    const month = pad(date.getMonth() + 1)
+    const day = pad(date.getDate())
+
+    // Extract 3-letter timezone abbreviation (e.g., PST, EDT, UTC)
+    const tzAbbr = Intl.DateTimeFormat('en-US', { timeZoneName: 'short' })
+        .formatToParts(date)
+        .find(part => part.type === 'timeZoneName')?.value || 'UTC'
+
+    return `${year}-${month}-${day} ${hourStr}:${minutes}:${seconds} ${ampm} ${tzAbbr}`
 }
