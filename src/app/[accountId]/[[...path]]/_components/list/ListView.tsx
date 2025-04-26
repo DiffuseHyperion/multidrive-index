@@ -4,14 +4,7 @@ import {createColumnHelper, flexRender, getCoreRowModel, useReactTable} from "@t
 import React from "react"
 import {redirect} from "next/navigation"
 import {formatBytes, getIcon} from "@/lib/utils"
-
-export type ListedItem = {
-    name: string
-    type: string,
-    lastModified: Date
-    size?: number
-    href: string
-}
+import {ListedItem} from "@/app/[accountId]/[[...path]]/_components/ClientFilesView"
 
 const columnHelper = createColumnHelper<ListedItem>()
 
@@ -42,7 +35,7 @@ const columns = [
     }),
 ]
 
-export default function ListViewTable({items}: { items: ListedItem[] }) {
+export default function ListView({items}: { items: ListedItem[] }) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [data, _setData] = React.useState(() => [...items])
 

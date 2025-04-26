@@ -1,7 +1,7 @@
 import type {Metadata} from "next"
 import {Geist, Geist_Mono} from "next/font/google"
 import "./globals.css"
-import Navbar from "@/app/_components/Navbar"
+import {ThemeProvider} from "@/shadcn/components/ThemeProvider"
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -20,15 +20,19 @@ export const metadata: Metadata = {
 
 export default function RootLayout({children}: Readonly<{ children: React.ReactNode }>) {
     return (
-        <html lang="en">
-        <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-text`}
-        >
-        <Navbar/>
-        <div className={"px-12 md:px-18 lg:px-36"}>
-            {children}
-        </div>
-        </body>
+        <html lang="en" suppressHydrationWarning>
+            <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="system"
+                    enableSystem
+                    disableTransitionOnChange
+                >
+                    <div className={"px-12 md:px-18 lg:px-36"}>
+                        {children}
+                    </div>
+                </ThemeProvider>
+            </body>
         </html>
     )
 }
