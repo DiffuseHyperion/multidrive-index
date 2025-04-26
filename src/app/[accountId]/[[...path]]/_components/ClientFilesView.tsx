@@ -3,17 +3,9 @@
 import {useViewTypeStore} from "@/hooks/stores"
 import ListView from "@/app/[accountId]/[[...path]]/_components/list/ListView"
 import GridView from "@/app/[accountId]/[[...path]]/_components/grid/GridView"
+import {ListedGenericFile} from "@/lib/files"
 
-export type ListedItem = {
-    name: string
-    key: string
-    type: string,
-    lastModified: Date
-    size?: number
-    href: string
-}
-
-export default function ClientFilesView({listedItems}: {listedItems: ListedItem[]}) {
+export default function ClientFilesView({listedItems}: { listedItems: ListedGenericFile[] }) {
     const {viewType} = useViewTypeStore()
 
     switch (viewType) {

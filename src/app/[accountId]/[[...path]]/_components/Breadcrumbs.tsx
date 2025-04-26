@@ -28,7 +28,7 @@ export default async function Breadcrumbs({accountId, path}: { accountId: string
                 <BreadcrumbItem key={name}>
                     <BreadcrumbLink href={redirect}>{name}</BreadcrumbLink>
                 </BreadcrumbItem>
-                <BreadcrumbSeparator />
+                <BreadcrumbSeparator/>
             </>
         )
     }

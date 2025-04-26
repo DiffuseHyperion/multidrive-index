@@ -18,7 +18,7 @@ export default async function AccountPage({params}: { params: Promise<{ accountI
             </div>
             <Card>
                 <div className={"px-6"}>
-                    <Suspense fallback={<Skeleton />}>
+                    <Suspense fallback={<Skeleton/>}>
                         <FilesView accountId={accountId} path={path}/>
                     </Suspense>
                 </div>

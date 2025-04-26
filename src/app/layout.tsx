@@ -21,18 +21,18 @@ export const metadata: Metadata = {
 export default function RootLayout({children}: Readonly<{ children: React.ReactNode }>) {
     return (
         <html lang={"en"} suppressHydrationWarning>
-            <body className={`${geistSans.variable} ${geistMono.variable} antialiased h-full`}>
-                <ThemeProvider
-                    attribute="class"
-                    defaultTheme="system"
-                    enableSystem
-                    disableTransitionOnChange
-                >
-                    <div className={"px-12 md:px-18 lg:px-36"}>
-                        {children}
-                    </div>
-                </ThemeProvider>
-            </body>
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased h-full`}>
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+        >
+            <div className={"px-12 md:px-18 lg:px-36"}>
+                {children}
+            </div>
+        </ThemeProvider>
+        </body>
         </html>
     )
 }

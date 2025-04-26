@@ -17,10 +17,9 @@ export function formatBytes(bytes: number, decimals: number) {
     return (bytes / Math.pow(k, i)).toFixed(decimals) + ' ' + sizes[i]
 }
 
-export function getIcon(mimeType: string) {
+export function getIcon(mimeType?: string) {
+    if (!mimeType) return <FolderIcon />
     switch (mimeType) {
-        case "Folder":
-            return <FolderIcon/>
         case "image/png":
             return <ImageIcon/>
         case "application/x-gzip":

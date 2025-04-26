@@ -3,14 +3,14 @@
 import {Column, ColumnDef, flexRender, getCoreRowModel, getSortedRowModel, SortingState, useReactTable} from "@tanstack/react-table"
 
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/shadcn/components/ui/table"
-import {ListedItem} from "@/app/[accountId]/[[...path]]/_components/ClientFilesView"
 import {formatBytes, formatDate, getIcon} from "@/lib/utils"
 import React from "react"
 import {redirect} from "next/navigation"
 import {ArrowUpDown} from "lucide-react"
 import {Button} from "@/shadcn/components/ui/button"
+import {ListedGenericFile} from "@/lib/files"
 
-function SortableColumnHeader({column, name}: { column: Column<ListedItem>, name: string }) {
+function SortableColumnHeader({column, name}: { column: Column<ListedGenericFile>, name: string }) {
     return (
         <Button
             variant={"ghost"}
@@ -22,33 +22,34 @@ function SortableColumnHeader({column, name}: { column: Column<ListedItem>, name
         </Button>
     )
 }
-export const columns: ColumnDef<ListedItem>[] = [
+
+export const columns: ColumnDef<ListedGenericFile>[] = [
     {
         accessorKey: "name",
         header: ({column}) => (
-            <SortableColumnHeader column={column} name={"Name"} />
+            <SortableColumnHeader column={column} name={"Name"}/>
         ),
         cell: ({row}) => (
             // left padding is 2 instead of 3 due to existing padding in icons
             <div className={"flex flex-row items-center gap-x-2 pl-2"}>
-                {getIcon(row.getValue("type"))}
+                {getIcon(row.getValue("mimeType"))}
                 <p>{row.getValue("name")}</p>
             </div>
         ),
     },
     {
-        accessorKey: "type",
+        accessorKey: "mimeType",
         header: ({column}) => (
-            <SortableColumnHeader column={column} name={"Type"} />
+            <SortableColumnHeader column={column} name={"Type"}/>
         ),
         cell: ({row}) => (
-            <p className={"pl-3"}>{row.getValue("type")}</p>
-        )
+            <p className={"pl-3"}>{row.getValue("mimeType") ? row.getValue("mimeType") : "Folder"}</p>
+        ),
     },
     {
         accessorKey: "lastModified",
         header: ({column}) => (
-            <SortableColumnHeader column={column} name={"Last Modified"} />
+            <SortableColumnHeader column={column} name={"Last Modified"}/>
         ),
         cell: ({row}) => (
             <p className={"pl-3"}>{formatDate(row.getValue("lastModified") as Date)}</p>
@@ -57,20 +58,20 @@ export const columns: ColumnDef<ListedItem>[] = [
     {
         accessorKey: "size",
         header: ({column}) => (
-            <SortableColumnHeader column={column} name={"Size"} />
+            <SortableColumnHeader column={column} name={"Size"}/>
         ),
         cell: ({row}) => (
             <p className={"pl-3"}>{row.getValue("size") ? formatBytes(row.getValue("size")!, 2) : "-"}</p>
         ),
     },
     {
-        accessorKey: "href",
+        accessorKey: "path",
         header: () => null,
         cell: () => null,
     },
 ]
 
-export default function ListView({items}: { items: ListedItem[] }) {
+export default function ListView({items}: { items: ListedGenericFile[] }) {
     const [sorting, setSorting] = React.useState<SortingState>([])
 
     const data = items // variable name must be "data" :moyai:
@@ -113,7 +114,7 @@ export default function ListView({items}: { items: ListedItem[] }) {
                                 key={row.id}
                                 data-state={row.getIsSelected() && "selected"}
                                 className={"cursor-pointer"}
-                                onClick={() => redirect(row.getValue("href"))}
+                                onClick={() => redirect(row.getValue("path"))}
                             >
                                 {row.getVisibleCells().map((cell) => (
                                     <TableCell key={cell.id}>

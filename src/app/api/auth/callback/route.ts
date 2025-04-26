@@ -1,6 +1,7 @@
 import {NextRequest} from "next/server"
 import {redirect} from "next/navigation"
-import {MSAL, prisma, SCOPES} from "@/lib/globals"
+import {MSAL, SCOPES} from "@/lib/globals"
+import {upsertAccount} from "@/lib/database/Accounts"
 
 export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams
@@ -16,20 +17,9 @@ export async function GET(request: NextRequest) {
 
         const accountInfo = response.account!
 
-        const account = await prisma.account.upsert({
-            where: {
-                homeAccountId: accountInfo.homeAccountId,
-            },
-            update: {
-                name: accountInfo.username,
-            },
-            create: {
-                homeAccountId: accountInfo.homeAccountId,
-                name: accountInfo.username,
-            },
-        })
+        await upsertAccount(accountInfo.homeAccountId, accountInfo.username)
 
-        redirect(`/${account.homeAccountId}`)
+        redirect(`/${accountInfo.homeAccountId}`)
     } catch (error: unknown) {
         const {errorMessage} = error as { errorMessage: string }
         return new Response(errorMessage, {status: 400})

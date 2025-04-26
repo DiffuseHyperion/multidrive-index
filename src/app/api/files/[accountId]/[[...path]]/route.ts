@@ -1,17 +1,12 @@
-import {NextRequest, NextResponse} from "next/server"
-import {getAccessToken} from "@/lib/auth"
-import getFiles from "@/lib/files"
+import {NextResponse} from "next/server"
+import {getListedGenericFiles} from "@/lib/files"
 
-export async function GET(request: NextRequest, {params}: { params: Promise<{ accountId: string, path?: string[] }> }) {
+// request argument required or params will be undefined lol
+export async function GET(_: Request, {params}: { params: Promise<{ accountId: string, path?: string[] }> }) {
     const {accountId, path} = await params
-    if (!accountId) {
-        return new Response("No ID provided", {status: 400})
-    }
 
-    const accessToken = await getAccessToken(accountId)
-    if (!accessToken) {
-        return new Response("Unauthorized", {status: 401})
-    }
+    const {data, error} = await getListedGenericFiles(accountId, path)
+    if (!data) return new Response("An error occured", {status: error})
 
-    return NextResponse.json(await getFiles(accessToken, path))
+    return NextResponse.json(data)
 }
