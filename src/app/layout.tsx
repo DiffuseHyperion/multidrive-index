@@ -22,18 +22,18 @@ export const metadata: Metadata = {
 
 export default function RootLayout({children}: Readonly<{ children: React.ReactNode }>) {
     return (
-        <html lang={"en"} className={"min-h-full h-full"} suppressHydrationWarning>
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased h-full`}>
+        <html lang={"en"} className={"min-h-screen flex flex-col"} suppressHydrationWarning>
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex-grow flex flex-col`}>
         <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange
         >
-            <div className={"h-full flex flex-col"}>
+            <div className={"flex-grow flex flex-col"}>
                 <Navbar />
                 <div className={"py-4 flex-grow flex flex-row justify-center"}>
-                    <div className={"w-full max-w-320 px-8"}>
+                    <div className={"w-full max-w-320 px-8 flex flex-col"}>
                         {children}
                     </div>
                 </div>

@@ -9,12 +9,10 @@ export default async function AccountPage({params}: { params: Promise<{ accountI
     const {accountId, path} = await params
 
     return (
-        <Card>
-            <div className={"px-6"}>
-                <Suspense fallback={<Skeleton/>}>
-                    <FilesView accountId={accountId} path={path}/>
-                </Suspense>
-            </div>
+        <Card className={"flex-grow flex flex-col px-6"}>
+            <Suspense fallback={<Skeleton className={"flex-grow"}/>}>
+                <FilesView accountId={accountId} path={path}/>
+            </Suspense>
         </Card>
     )
 }
