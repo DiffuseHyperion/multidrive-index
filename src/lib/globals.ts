@@ -1,6 +1,6 @@
 import {PrismaClient} from "@/lib/prisma"
 import {ConfidentialClientApplication} from "@azure/msal-node"
-import {CachePlugin} from "@/lib/auth/CachePlugin"
+import {CachePlugin} from "@/lib/msal/CachePlugin"
 
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient }
 const globalForMSAL = globalThis as unknown as { MSAL: ConfidentialClientApplication }

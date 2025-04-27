@@ -2,6 +2,7 @@ import type {Metadata} from "next"
 import {Geist, Geist_Mono} from "next/font/google"
 import "./globals.css"
 import {ThemeProvider} from "@/shadcn/components/ThemeProvider"
+import {Toaster} from "@/shadcn/components/ui/sonner"
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({children}: Readonly<{ children: React.ReactNode }>) {
     return (
-        <html lang={"en"} suppressHydrationWarning>
+        <html lang={"en"} className={"min-h-full h-full"} suppressHydrationWarning>
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased h-full`}>
         <ThemeProvider
             attribute="class"
@@ -28,9 +29,10 @@ export default function RootLayout({children}: Readonly<{ children: React.ReactN
             enableSystem
             disableTransitionOnChange
         >
-            <div className={"px-12 md:px-18 lg:px-36"}>
+            <div className={"px-12 md:px-18 lg:px-36 h-full"}>
                 {children}
             </div>
+            <Toaster />
         </ThemeProvider>
         </body>
         </html>

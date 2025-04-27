@@ -9,6 +9,11 @@ datasource db {
 }
 
 model Account {
+  name String @id
+  hash String
+}
+
+model MSALAccount {
   homeAccountId String  @id @unique
   name          String
   visible       Boolean @default(false)

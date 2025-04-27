@@ -3,11 +3,11 @@
 import {prisma} from "@/lib/globals"
 
 export async function readAccounts() {
-    return prisma.account.findMany()
+    return prisma.mSALAccount.findMany()
 }
 
 export async function upsertAccount(homeAccountId: string, name: string) {
-    return prisma.account.upsert({
+    return prisma.mSALAccount.upsert({
         where: {
             homeAccountId: homeAccountId,
         },
@@ -17,6 +17,14 @@ export async function upsertAccount(homeAccountId: string, name: string) {
         create: {
             homeAccountId: homeAccountId,
             name: name,
+        },
+    })
+}
+
+export async function deleteAccount(homeAccountId: string) {
+    return prisma.mSALAccount.delete({
+        where: {
+            homeAccountId: homeAccountId,
         },
     })
 }

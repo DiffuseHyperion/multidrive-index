@@ -1,5 +1,5 @@
 import {ICachePlugin, TokenCacheContext} from "@azure/msal-node"
-import {getJsonCache, saveJsonCache} from "@/lib/auth/JsonCacheHandler"
+import {getJsonCache, saveJsonCache} from "@/lib/msal/JsonCacheHandler"
 
 export class CachePlugin implements ICachePlugin {
     async beforeCacheAccess(cacheContext: TokenCacheContext): Promise<void> {

@@ -1,16 +1,13 @@
 "use server"
 
-import {MSAL, prisma, SCOPES} from "@/lib/globals"
+import {MSAL, SCOPES} from "@/lib/globals"
+import {deleteAccount} from "@/lib/database/Accounts"
 
 export async function getAccessToken(homeAccountId: string) {
     const accountInfo = await MSAL.getTokenCache().getAccountByHomeId(homeAccountId)
 
     if (!accountInfo) {
-        prisma.account.delete({
-            where: {
-                homeAccountId: homeAccountId,
-            },
-        })
+        await deleteAccount(homeAccountId)
         return null
     }
 

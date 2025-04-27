@@ -1,7 +1,7 @@
 "use server"
 
 import {paramPathToFullPath} from "@/lib/utils"
-import {getAccessToken} from "@/lib/auth"
+import {getAccessToken} from "@/lib/msal/tokens"
 
 export type OnedriveUser = {
     user: {
