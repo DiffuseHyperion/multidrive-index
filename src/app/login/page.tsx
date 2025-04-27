@@ -1,4 +1,4 @@
-import AdminLoginForm from "@/app/admin/login/_components/LoginForm"
+import AdminLoginForm from "@/app/login/_components/LoginForm"
 import {Card} from "@/shadcn/components/ui/card"
 
 export default async function AdminLoginPage() {

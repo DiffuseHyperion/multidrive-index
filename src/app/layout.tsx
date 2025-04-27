@@ -3,6 +3,7 @@ import {Geist, Geist_Mono} from "next/font/google"
 import "./globals.css"
 import {ThemeProvider} from "@/shadcn/components/ThemeProvider"
 import {Toaster} from "@/shadcn/components/ui/sonner"
+import Navbar from "@/app/_components/Navbar"
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -29,10 +30,15 @@ export default function RootLayout({children}: Readonly<{ children: React.ReactN
             enableSystem
             disableTransitionOnChange
         >
-            <div className={"px-12 md:px-18 lg:px-36 h-full"}>
-                {children}
+            <div className={"h-full flex flex-col"}>
+                <Navbar />
+                <div className={"py-4 flex-grow flex flex-row justify-center"}>
+                    <div className={"w-full max-w-320 px-8"}>
+                        {children}
+                    </div>
+                </div>
             </div>
-            <Toaster />
+            <Toaster/>
         </ThemeProvider>
         </body>
         </html>
