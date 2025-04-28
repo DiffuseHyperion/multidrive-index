@@ -1,7 +1,5 @@
 import {getSession} from "@/lib/auth/session"
-import {Button} from "@/shadcn/components/ui/button"
-import Link from "next/link"
-import {LogInIcon} from "lucide-react"
+import {SidebarTrigger} from "@/shadcn/components/ui/sidebar";
 
 export default async function NavbarAdminButton() {
     const session = await getSession()
@@ -10,10 +8,6 @@ export default async function NavbarAdminButton() {
     }
 
     return (
-        <Button asChild variant={"ghost"}>
-            <Link href={"/admin"}>
-                <LogInIcon/>
-            </Link>
-        </Button>
+        <SidebarTrigger />
     )
 }

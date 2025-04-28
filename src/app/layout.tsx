@@ -4,6 +4,7 @@ import "./globals.css"
 import {ThemeProvider} from "@/shadcn/components/ThemeProvider"
 import {Toaster} from "@/shadcn/components/ui/sonner"
 import Navbar from "@/app/_components/Navbar"
+import {SidebarProvider} from "@/shadcn/components/ui/sidebar";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -30,14 +31,16 @@ export default function RootLayout({children}: Readonly<{ children: React.ReactN
             enableSystem
             disableTransitionOnChange
         >
-            <div className={"flex-grow flex flex-col"}>
-                <Navbar />
-                <div className={"py-4 flex-grow flex flex-row justify-center"}>
-                    <div className={"w-full max-w-320 px-8 flex flex-col"}>
-                        {children}
+            <SidebarProvider>
+                <main className={"flex-grow flex flex-col"}>
+                    <Navbar />
+                    <div className={"py-4 flex-grow flex flex-row justify-center"}>
+                        <div className={"w-full max-w-320 px-8 flex flex-col"}>
+                            {children}
+                        </div>
                     </div>
-                </div>
-            </div>
+                </main>
+            </SidebarProvider>
             <Toaster/>
         </ThemeProvider>
         </body>
