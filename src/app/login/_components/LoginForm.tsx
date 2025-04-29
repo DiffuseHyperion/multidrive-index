@@ -7,7 +7,7 @@ import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/
 import {Input} from "@/shadcn/components/ui/input"
 import {Button} from "@/shadcn/components/ui/button"
 import login from "@/lib/auth/login"
-import {redirect} from "next/navigation"
+import {redirect, useSearchParams} from "next/navigation"
 import {toast} from "sonner"
 
 const formSchema = z.object({
@@ -20,6 +20,9 @@ const formSchema = z.object({
 })
 
 export default function AdminLoginForm() {
+    const searchParams = useSearchParams()
+    const loginRedirect = searchParams.get('redirect')
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -39,7 +42,11 @@ export default function AdminLoginForm() {
         const success = await login(name, hashString)
 
         if (success) {
-            redirect("/admin")
+            if (loginRedirect) {
+                redirect(loginRedirect)
+            } else {
+                redirect("/admin")
+            }
         } else {
             toast("Invalid credentials.")
         }

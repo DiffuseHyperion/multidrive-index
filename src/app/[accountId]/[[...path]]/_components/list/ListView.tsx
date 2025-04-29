@@ -126,7 +126,7 @@ export default function ListView({items}: { items: ListedGenericFile[] }) {
                     ) : (
                         <TableRow>
                             <TableCell colSpan={columns.length} className={"h-24 text-center"}>
-                                No results.
+                                Folder is empty.
                             </TableCell>
                         </TableRow>
                     )}

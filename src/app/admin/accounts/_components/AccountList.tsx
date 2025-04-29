@@ -127,7 +127,7 @@ export default function AccountsList({items}: {items: MSALAccount[]}) {
                     ) : (
                         <TableRow>
                             <TableCell colSpan={columns.length} className={"h-24 text-center"}>
-                                No results.
+                                No accounts found.
                             </TableCell>
                         </TableRow>
                     )}

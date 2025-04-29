@@ -4,7 +4,7 @@ import {redirect} from "next/navigation"
 export default async function Home() {
     const accounts = await readAccounts()
     if (accounts.length === 0) {
-        redirect("/admin")
+        redirect("/admin/accounts")
     } else if (accounts.length === 1) {
         redirect(`/${accounts[0].homeAccountId}`)
     }
