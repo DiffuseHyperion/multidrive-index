@@ -23,6 +23,18 @@ export async function upsertAccount(homeAccountId: string, name: string, visible
     })
 }
 
+export async function isAccountVisible(homeAccountId: string) {
+    const result = await prisma.mSALAccount.findUnique({
+        where: {
+            homeAccountId: homeAccountId,
+        },
+        select: {
+            visible: true,
+        }
+    })
+    return result ? result!.visible : null
+}
+
 export async function deleteAccount(homeAccountId: string) {
     return prisma.mSALAccount.delete({
         where: {
