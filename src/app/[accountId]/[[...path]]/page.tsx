@@ -16,8 +16,8 @@ export default async function AccountPage({params}: { params: Promise<{ accountI
 
     return (
         <Card className={"flex-grow flex flex-col"}>
-            <CardHeader className={"gap-y-6"}>
-                <Suspense fallback={<Skeleton className={"flex-grow"}/>}>
+            <CardHeader className={"gap-y-6 flex-grow flex flex-col"}>
+                <Suspense fallback={<Skeleton className={"w-full flex-grow"}/>}>
                     <FilesView accountId={accountId} path={path}/>
                 </Suspense>
             </CardHeader>

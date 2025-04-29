@@ -8,7 +8,7 @@ import {ListedGenericFile} from "@/lib/files"
 export default function GridView({items}: { items: ListedGenericFile[] }) {
     if (items.length) {
         return (
-            <div className={"flew-grow grid gap-4 grid-cols-[repeat(auto-fill,minmax(150px,1fr))]"}>
+            <div className={"w-full flew-grow grid gap-4 grid-cols-[repeat(auto-fill,minmax(150px,1fr))]"}>
                 {items.map((item) => (
                     <Button key={item.key} asChild variant={"outline"} className={"w-36 h-36"}>
                         <Link href={item.path}>
@@ -25,6 +25,6 @@ export default function GridView({items}: { items: ListedGenericFile[] }) {
     }
 
     return (
-        <p className={"flex-grow flex flex-col items-center justify-center"}>Folder is empty.</p>
+        <p className={"w-full flex-grow flex flex-col items-center justify-center"}>Folder is empty.</p>
     )
 }

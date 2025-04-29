@@ -30,6 +30,5 @@ export default async function FilesView({accountId, path}: { accountId: string, 
 
     return (
         <ClientFilesView listedItems={data}/>
-
     )
 }
