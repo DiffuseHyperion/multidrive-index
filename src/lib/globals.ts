@@ -1,4 +1,4 @@
-import {PrismaClient} from "@/lib/prisma"
+import {PrismaClient} from "@prisma/client"
 import {ConfidentialClientApplication} from "@azure/msal-node"
 import {CachePlugin} from "@/lib/msal/CachePlugin"
 
