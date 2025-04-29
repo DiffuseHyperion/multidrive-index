@@ -1,7 +1,7 @@
 import {MSAL, SCOPES} from "@/lib/globals"
 import AccountListView from "@/app/admin/accounts/_components/AccountListView"
 import {Suspense} from "react"
-import {Card} from "@/shadcn/components/ui/card"
+import {Card, CardHeader} from "@/shadcn/components/ui/card"
 import {Skeleton} from "@/shadcn/components/ui/skeleton"
 import {Button} from "@/shadcn/components/ui/button"
 import {redirect} from "next/navigation"
@@ -32,10 +32,12 @@ export default async function AdminAccount() {
                     </Button>
                 </form>
             </div>
-            <Card className={"p-6 flex-grow flex flex-col"}>
-                <Suspense fallback={<Skeleton className={"flex-grow"}/>}>
-                    <AccountListView/>
-                </Suspense>
+            <Card className={"flex-grow flex flex-col"}>
+                <CardHeader>
+                    <Suspense fallback={<Skeleton className={"flex-grow"}/>}>
+                        <AccountListView/>
+                    </Suspense>
+                </CardHeader>
             </Card>
         </div>
     )
