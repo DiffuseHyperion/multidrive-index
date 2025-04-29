@@ -1,7 +1,7 @@
 import {NextRequest} from "next/server"
 import {redirect} from "next/navigation"
 import {MSAL, SCOPES} from "@/lib/globals"
-import {upsertAccount} from "@/lib/database/Accounts"
+import {upsertAccount} from "@/lib/database/MSALAccounts"
 
 export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams
@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
 
     const accountInfo = response.account!
 
-    await upsertAccount(accountInfo.homeAccountId, accountInfo.username)
+    await upsertAccount(accountInfo.homeAccountId, accountInfo.username, false)
 
     redirect(`/${accountInfo.homeAccountId}`)
 }

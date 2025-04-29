@@ -1,4 +1,4 @@
-import {readAccounts} from "@/lib/database/Accounts"
+import {readAccounts} from "@/lib/database/MSALAccounts"
 import {redirect} from "next/navigation"
 
 export default async function Home() {
