@@ -5,6 +5,6 @@ export default async function AccountListView() {
     const accounts = await prisma.mSALAccount.findMany()
 
     return (
-        <AccountsList items={accounts} />
+        <AccountsList items={accounts}/>
     )
 }

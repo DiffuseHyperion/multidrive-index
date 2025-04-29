@@ -4,10 +4,10 @@ import {Column, ColumnDef, flexRender, getCoreRowModel, getSortedRowModel, Sorti
 import React from "react"
 import {Button} from "@/shadcn/components/ui/button"
 import {ArrowUpDown, CheckIcon, EyeIcon, EyeOffIcon, SquareArrowOutUpRightIcon, XIcon} from "lucide-react"
-import {MSALAccount} from "@/lib/prisma"
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/shadcn/components/ui/table"
 import {upsertAccount} from "@/lib/database/MSALAccounts"
 import {redirect, useRouter} from "next/navigation"
+import {MSALAccount} from "@prisma/client"
 
 function SortableColumnHeader({column, name}: { column: Column<MSALAccount>, name: string }) {
     return (
@@ -22,7 +22,7 @@ function SortableColumnHeader({column, name}: { column: Column<MSALAccount>, nam
     )
 }
 
-export default function AccountsList({items}: {items: MSALAccount[]}) {
+export default function AccountsList({items}: { items: MSALAccount[] }) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const router = useRouter()
 
@@ -73,8 +73,8 @@ export default function AccountsList({items}: {items: MSALAccount[]}) {
                         {<SquareArrowOutUpRightIcon/>}
                     </Button>
                 </div>
-            )
-        }
+            ),
+        },
     ]
 
     const data = items // variable name must be "data" :moyai:

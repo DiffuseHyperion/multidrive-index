@@ -10,15 +10,15 @@ export function paramPathToFullPath(path: string[] | undefined): string {
 
 export function formatBytes(bytes: number, decimals: number) {
     // stolen from https://gist.github.com/zentala/1e6f72438796d74531803cc3833c039c
-    if (bytes == 0) return '0 B'
+    if (bytes == 0) return "0 B"
     const k = 1024
-    const sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+    const sizes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"]
     const i = Math.floor(Math.log(bytes) / Math.log(k))
-    return (bytes / Math.pow(k, i)).toFixed(decimals) + ' ' + sizes[i]
+    return (bytes / Math.pow(k, i)).toFixed(decimals) + " " + sizes[i]
 }
 
 export function getIcon(mimeType?: string) {
-    if (!mimeType) return <FolderIcon />
+    if (!mimeType) return <FolderIcon/>
     switch (mimeType) {
         case "image/png":
             return <ImageIcon/>
@@ -33,12 +33,12 @@ export function getIcon(mimeType?: string) {
 }
 
 export function formatDate(date: Date): string {
-    const pad = (n: number) => n.toString().padStart(2, '0')
+    const pad = (n: number) => n.toString().padStart(2, "0")
 
     let hours = date.getHours()
     const minutes = pad(date.getMinutes())
     const seconds = pad(date.getSeconds())
-    const ampm = hours >= 12 ? 'PM' : 'AM'
+    const ampm = hours >= 12 ? "PM" : "AM"
 
     hours = hours % 12
     hours = hours ? hours : 12 // 0 becomes 12
@@ -49,9 +49,9 @@ export function formatDate(date: Date): string {
     const day = pad(date.getDate())
 
     // Extract 3-letter timezone abbreviation (e.g., PST, EDT, UTC)
-    const tzAbbr = Intl.DateTimeFormat('en-US', { timeZoneName: 'short' })
+    const tzAbbr = Intl.DateTimeFormat("en-US", {timeZoneName: "short"})
         .formatToParts(date)
-        .find(part => part.type === 'timeZoneName')?.value || 'UTC'
+        .find(part => part.type === "timeZoneName")?.value || "UTC"
 
     return `${year}-${month}-${day} ${hourStr}:${minutes}:${seconds} ${ampm} ${tzAbbr}`
 }

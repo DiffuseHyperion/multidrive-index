@@ -62,7 +62,10 @@ export type ListedGenericFile = {
     path: string
 }
 
-export async function getOnedriveGenericFiles(accountId: string, path?: string[]): Promise<{data: (OnedriveFolder | OnedriveFile)[], error: null} | {data: null, error: number}> {
+export async function getOnedriveGenericFiles(accountId: string, path?: string[]): Promise<{
+    data: (OnedriveFolder | OnedriveFile)[],
+    error: null
+} | { data: null, error: number }> {
     const accessToken = await getAccessToken(accountId)
     if (!accessToken) {
         return {data: null, error: 401}
@@ -73,7 +76,7 @@ export async function getOnedriveGenericFiles(accountId: string, path?: string[]
     const response = await fetch(`https://graph.microsoft.com/v1.0/me/drive/root${targetPath}/children`, {
         headers: {
             "Authorization": `Bearer ${accessToken}`,
-        }
+        },
     })
 
     if (!response.ok) {
@@ -90,11 +93,14 @@ export async function getOnedriveGenericFiles(accountId: string, path?: string[]
                 throw Error(`Could not recognize whether "${folder.name}" was a file or folder`)
             }
         }),
-        error: null
+        error: null,
     }
 }
 
-export async function getListedGenericFiles(accountId: string, path?: string[]): Promise<{data: ListedGenericFile[], error: null} | {data: null, error: number}> {
+export async function getListedGenericFiles(accountId: string, path?: string[]): Promise<{
+    data: ListedGenericFile[],
+    error: null
+} | { data: null, error: number }> {
     const {data, error} = await getOnedriveGenericFiles(accountId, path)
     if (!data) {
         return {data: null, error: error}

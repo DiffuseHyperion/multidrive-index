@@ -27,13 +27,13 @@ export default async function AdminAccount() {
                     redirect(url)
                 }}>
                     <Button type={"submit"} variant={"secondary"} className={"cursor-pointer"}>
-                        <PlusIcon />
+                        <PlusIcon/>
                         Add Account
                     </Button>
                 </form>
             </div>
             <Card className={"p-6 flex-grow flex flex-col"}>
-                <Suspense fallback={<Skeleton className={"flex-grow"} />}>
+                <Suspense fallback={<Skeleton className={"flex-grow"}/>}>
                     <AccountListView/>
                 </Suspense>
             </Card>

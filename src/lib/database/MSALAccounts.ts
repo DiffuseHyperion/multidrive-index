@@ -30,7 +30,7 @@ export async function isAccountVisible(homeAccountId: string) {
         },
         select: {
             visible: true,
-        }
+        },
     })
     return result ? result!.visible : null
 }

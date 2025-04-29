@@ -11,7 +11,7 @@ export default async function login(name: string, hash: string) {
         where: {
             name: name,
             hash: hash,
-        }
+        },
     })
 
     if (!user) {

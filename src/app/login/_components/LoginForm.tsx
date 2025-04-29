@@ -21,7 +21,7 @@ const formSchema = z.object({
 
 export default function AdminLoginForm() {
     const searchParams = useSearchParams()
-    const loginRedirect = searchParams.get('redirect')
+    const loginRedirect = searchParams.get("redirect")
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),

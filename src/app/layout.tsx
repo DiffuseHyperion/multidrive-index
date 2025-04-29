@@ -4,7 +4,7 @@ import "./globals.css"
 import {ThemeProvider} from "@/shadcn/components/ThemeProvider"
 import {Toaster} from "@/shadcn/components/ui/sonner"
 import AppNavbar from "@/app/_components/AppNavbar"
-import {SidebarProvider} from "@/shadcn/components/ui/sidebar";
+import {SidebarProvider} from "@/shadcn/components/ui/sidebar"
 import AppSidebar from "@/app/_components/AppSidebar"
 import {cookies} from "next/headers"
 import {getSession} from "@/lib/auth/session"
@@ -42,7 +42,7 @@ export default async function RootLayout({children}: Readonly<{ children: React.
             <SidebarProvider defaultOpen={defaultOpen}>
                 <AppSidebar/>
                 <main className={"flex-grow flex flex-col"}>
-                    <AppNavbar />
+                    <AppNavbar/>
                     <div className={"py-4 flex-grow flex flex-row justify-center"}>
                         <div className={"w-full max-w-320 px-8 flex-grow flex flex-col"}>
                             {children}

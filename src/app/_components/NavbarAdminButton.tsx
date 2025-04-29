@@ -1,5 +1,5 @@
 import {getSession} from "@/lib/auth/session"
-import {SidebarTrigger} from "@/shadcn/components/ui/sidebar";
+import {SidebarTrigger} from "@/shadcn/components/ui/sidebar"
 
 export default async function NavbarAdminButton() {
     const session = await getSession()
@@ -8,6 +8,6 @@ export default async function NavbarAdminButton() {
     }
 
     return (
-        <SidebarTrigger />
+        <SidebarTrigger/>
     )
 }
