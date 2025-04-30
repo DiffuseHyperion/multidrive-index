@@ -6,18 +6,15 @@ import {Skeleton} from "@/shadcn/components/ui/skeleton"
 import {Button} from "@/shadcn/components/ui/button"
 import {redirect} from "next/navigation"
 import {PlusIcon} from "lucide-react"
-import {getSession} from "@/lib/auth/session"
+import {requireSession} from "@/lib/auth/session"
 
 export default async function AdminAccount() {
-    const session = await getSession()
-    if (!session.isLoggedIn) {
-        redirect("/login?redirect=/admin/accounts")
-    }
+    await requireSession("/admin/accounts")
 
     return (
         <div className={"flex-grow flex flex-col gap-y-2"}>
             <div className={"flex flex-row items-center justify-between"}>
-                <p>Accounts List</p>
+                <p>OneDrive Accounts List</p>
                 <form action={async () => {
                     "use server"
                     const url = await MSAL.getAuthCodeUrl({

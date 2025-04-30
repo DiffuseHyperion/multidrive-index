@@ -1,5 +1,6 @@
 import {getIronSession, SessionOptions} from "iron-session"
 import {cookies} from "next/headers"
+import {redirect} from "next/navigation";
 
 export interface SessionData {
     name?: string;
@@ -27,4 +28,11 @@ export async function getSession() {
     }
 
     return session
+}
+
+export async function requireSession(redirectPath: string) {
+    const session = await getSession()
+    if (!session.isLoggedIn) {
+        redirect(`/login?redirect=${redirectPath}`)
+    }
 }

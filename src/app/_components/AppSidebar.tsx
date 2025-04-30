@@ -1,10 +1,25 @@
-import {Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem} from "@/shadcn/components/ui/sidebar"
+import {
+    Sidebar,
+    SidebarContent,
+    SidebarFooter,
+    SidebarGroup,
+    SidebarGroupContent,
+    SidebarGroupLabel,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem
+} from "@/shadcn/components/ui/sidebar"
 import {UsersIcon} from "lucide-react"
 
 const items = [
     {
-        title: "Accounts",
+        title: "OneDrive Accounts",
         url: "/admin/accounts",
+        icon: UsersIcon,
+    },
+    {
+        title: "Admin Users",
+        url: "/admin/users",
         icon: UsersIcon,
     },
 ]
