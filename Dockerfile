@@ -8,8 +8,8 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 # Install dependencies based on the preferred package manager
-COPY prisma/schema.prisma ./prisma/schema.prisma
-COPY pnpm-lock.yaml* .npmrc* ./
+COPY prisma/schema.prisma prisma/schema.prisma
+COPY pnpm-lock.yaml pnpm-lock.yaml
 
 RUN corepack enable pnpm && pnpm i --frozen-lockfile
 
@@ -18,12 +18,12 @@ FROM base AS builder
 WORKDIR /app
 ENV NODE_ENV=production
 
-COPY --from=deps /app/node_modules ./node_modules
+COPY --from=deps /app/node_modules node_modules
 
 COPY . .
 
 RUN --mount=type=secret,id=REDIRECT_URL,required=true \
-    echo "REDIRECT_URL=$(cat /run/secrets/REDIRECT_URL)" >> .env.production \
+    echo "REDIRECT_URL=$(cat /run/secrets/REDIRECT_URL)" >> .env.production
 
 RUN --mount=type=secret,id=CLIENT_SECRET,required=true \
     echo "CLIENT_SECRET=$(cat /run/secrets/CLIENT_SECRET)" >> .env.production
@@ -49,8 +49,8 @@ RUN adduser -S nextjs -u 1001
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone .next/standalone
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static .next/static
 
 USER nextjs
 
