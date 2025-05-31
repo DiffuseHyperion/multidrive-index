@@ -9,6 +9,7 @@ WORKDIR /app
 
 # Install dependencies based on the preferred package manager
 COPY prisma/schema.prisma prisma/schema.prisma
+COPY package.json package.json
 COPY pnpm-lock.yaml pnpm-lock.yaml
 
 RUN corepack enable pnpm && pnpm i --frozen-lockfile
